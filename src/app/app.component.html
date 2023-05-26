@@ -6,7 +6,7 @@
     <!----TOOLBAR TO ADD AND SEARCH EMPLOYEES-->
     <div class="toolbar">
       <div class="add-employee">
-        <button type="button" class="btn btn-outline-success btn-lg">Add Employee</button>
+        <button type="button" class="btn btn-outline-success btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Employee</button>
       </div>
       <div class="search-employees">
         <input type="search" class="form-control" placeholder="search-employees">
@@ -25,9 +25,10 @@
 </div>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<!---- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Launch demo modal
-</button>
+</button> 
+-->
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -38,28 +39,28 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form [formGroup]="employeeForm">
           <div class="row">
             <div class="col">
-              <input type="text" class="form-control" placeholder="First Name">
+              <input type="text" class="form-control" placeholder="First Name" formControlName="firstname">
             </div>
             <div class="col">
-              <input type="text" class="form-control" placeholder="Last Name">
+              <input type="text" class="form-control" placeholder="Last Name" formControlName="lastname">
             </div>
           </div>
           <!----PERSONAL INFORMATION-->
-          <div class="row mt-3">
-            <div class="col">
-              <h6 class="text-secondary fst-italic"> Personal Information <hr></h6>
+          <div class="row mt-5">
+            <div class="col form-heading">
+              <h6 class="text-secondary fst-italic"> Personal Information </h6>
             </div>
             </div>
           <div class="row mt-3">
             <div class="col">
               <label for="datepicker" class="form-label">
                 <h6 class="text-secondary">Birthdate</h6></label>
-              <input type="date" class="form-control" id="datepicker">
+              <input type="date" class="form-control" id="datepicker" formControlName="birthday">
             </div>
-            <div class="col">
+            <div class="col" formControlName="gender">
               <h6 class="text-secondary">Gender</h6>
               <div class="form-check form-check-inline">
                 <input type="radio" class="form-check-input" name="gender" id="male" value="m">
@@ -73,9 +74,34 @@
           </div>
           <div class="row mt-3">
             <div class="col">
-              <select class="form-select">
+              <select class="form-select" formControlName="education">
                 <option value="default" selected>Select your Education</option>
+                <option *ngFor="let option of educationOptions; let i = index;" value="{{i}}">{{option | titlecase}}</option>
               </select>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col">
+              <label for="profile" class="form-label">Profile Image</label>
+              <input type="file" class="form-control" id="profile" #fileInput>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col form-heading">
+              <h6 class="text-secondary fst-italic">Job Information</h6>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col">
+              <input class="form-control" type="text" placeholder="company" formControlName="company" >
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col">
+              <input type="number" class="form-control" placeholder="Job experience(yrs)" formControlName="jobExperience" >
+            </div>
+            <div class="col">
+              <input type="number" class="form-control" placeholder="Salary(Ksh)" formControlName="salary" >
             </div>
           </div>
         </form>
